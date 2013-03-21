@@ -8,8 +8,8 @@ class Home extends Controller
 		$this->render(array('name' => $name));
 	}
 	
-	function blah()
+	function page2()
 	{
-		echo 'Blah blah blah';
+		$this->render();	
 	}
 }

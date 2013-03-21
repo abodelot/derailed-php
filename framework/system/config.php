@@ -17,6 +17,11 @@ class Config
 			if (is_array($temp))
 			{
 				self::$_items = $temp;
+				
+				// Set the base url automatically if none was provided
+				if (!self::get('base_url'))
+					self::set_base_url();
+				
 				return true;
 			}
 		}
@@ -40,6 +45,23 @@ class Config
 	 */
 	static function set($name, $value)
 	{
-		self::$_item[$name] = $value;
+		self::$_items[$name] = $value;
 	}
+	
+	private static function set_base_url()
+	{
+		if (isset($_SERVER['HTTP_HOST']))
+		{
+			$base_url = isset($_SERVER['HTTPS']) && strtolower($_SERVER['HTTPS']) != 'off' ? 'https' : 'http';
+			$base_url .= '://'.$_SERVER['HTTP_HOST'];
+			$base_url .= str_replace(basename($_SERVER['SCRIPT_NAME']), '', $_SERVER['SCRIPT_NAME']);
+		}
+		else
+		{
+			$base_url = 'http://localhost';
+		}
+		self::set('base_url', $base_url);
+	}
+
 }
+
