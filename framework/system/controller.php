@@ -7,7 +7,7 @@ abstract class Controller
 {
 	private $layout_path = null;
 	private $view_path = null;
-	private $depth = 0;
+	private $view_depth = 0;
 	
 	function __construct($layout = null)
 	{
@@ -44,7 +44,8 @@ abstract class Controller
 			extract($data, EXTR_SKIP);
 
 		// TODO: use a buffer		
-		if ($this->layout_path)
+		++$this->view_depth;
+		if ($this->layout_path && $this->view_depth == 1)
 			require($this->layout_path);
 		
 		else

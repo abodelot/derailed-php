@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 	<head>
 		<title>Rache CMS <?php if (!empty($title)) echo $title ?></title>
@@ -7,5 +8,5 @@
 			<?php require $this->get_view_path() ?>
 		</div>
 	</body>
-</hmtl>
+</html>
 
