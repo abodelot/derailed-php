@@ -2,8 +2,8 @@
 
 class Config
 {
-	private static $_items = array();
-	private static $_site_url = '';
+	private static $items = array();
+	private static $site_url = '';
 	
 	/**
 	 * Load config setting from a config file
@@ -17,14 +17,14 @@ class Config
 			$temp = require($file_path);
 			if (is_array($temp))
 			{
-				self::$_items = $temp;
+				self::$items = $temp;
 				
 				// Set the base url automatically if none was provided
 				if (!self::get('base_url'))
 					self::set_base_url();
 				
 				// Set the site url
-				self::$_site_url = self::get('base_url').self::get('index_page');
+				self::$site_url = self::get('base_url').self::get('index_page');
 				return true;
 			}
 		}
@@ -38,7 +38,7 @@ class Config
 	 */
 	static function get($name)
 	{
-		return array_key_exists($name, self::$_items) ? self::$_items[$name] : null;
+		return array_key_exists($name, self::$items) ? self::$items[$name] : null;
 	}
 	
 	/**
@@ -48,7 +48,7 @@ class Config
 	 */
 	static function set($name, $value)
 	{
-		self::$_items[$name] = $value;
+		self::$items[$name] = $value;
 	}
 	
 	/**
@@ -56,7 +56,7 @@ class Config
 	 */
 	static function site_url()
 	{
-		return self::$_site_url;
+		return self::$site_url;
 	}
 
 	private static function set_base_url()
