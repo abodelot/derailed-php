@@ -13,6 +13,7 @@ error_reporting(E_ALL | E_STRICT | E_NOTICE);
 require('system/config.php');
 require('system/controller.php');
 require('system/router.php');
+require('system/html.php');
 
 // Load application configuration file
 if (!Config::load('application/config/config.php'))

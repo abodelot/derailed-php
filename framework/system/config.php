@@ -3,6 +3,7 @@
 class Config
 {
 	private static $_items = array();
+	private static $_site_url = '';
 	
 	/**
 	 * Load config setting from a config file
@@ -22,6 +23,8 @@ class Config
 				if (!self::get('base_url'))
 					self::set_base_url();
 				
+				// Set the site url
+				self::$_site_url = self::get('base_url').self::get('index_page');
 				return true;
 			}
 		}
@@ -48,6 +51,14 @@ class Config
 		self::$_items[$name] = $value;
 	}
 	
+	/**
+	 * Get site URL
+	 */
+	static function site_url()
+	{
+		return self::$_site_url;
+	}
+
 	private static function set_base_url()
 	{
 		if (isset($_SERVER['HTTP_HOST']))
