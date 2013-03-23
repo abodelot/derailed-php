@@ -34,6 +34,15 @@ class Html
 		$attr = 'href="'.$uri.'" type="text/css" rel="stylesheet"';
 		return self::build_html_tag('link', $attr, $options);
 	}
+	
+	/**
+	 * Javascript tag <script>
+	 */
+	static function link_js($uri)
+	{
+		$uri = self::build_uri($uri);
+		return '<script type="text/javascript" src="'.$uri.'"></script>';
+	}
 
 	private static function build_uri($uri)
 	{
