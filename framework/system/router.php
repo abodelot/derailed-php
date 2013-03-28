@@ -1,7 +1,5 @@
 <?php
 
-define('APPPATH', 'application/');
-
 /**
  * Holds informations relative to the requested URL
  */
@@ -50,6 +48,8 @@ class Router
 		$controller_path = APPPATH.'controllers/'.self::$controller_name.'.php';
 		if (is_readable($controller_path))
 		{
+			require($controller_path);
+			
 			// Find the method name
 			if (count(self::$segments) > 0)
 			{
@@ -64,13 +64,23 @@ class Router
 			}
 			
 			// Create controller instance and call the method
-			require($controller_path);
-			$invoke = array(new self::$controller_name, self::$method_name);
-			if (is_callable($invoke))
+			try
 			{
-				call_user_func_array($invoke, self::$segments);
-				return true;
+				$reflection_method = new ReflectionMethod(self::$controller_name, self::$method_name);
+
+				if ($reflection_method->getNumberOfRequiredParameters() > count(self::$segments))
+					die('not enough parameters for calling '.self::$controller_name.' '.self::$method_name);
+			
+				if ($reflection_method->getNumberOfParameters() < count(self::$segments))
+					die('too many parameters for calling '.self::$controller_name.' '.self::$method_name);
+			
+				$reflection_method->invokeArgs(new self::$controller_name, self::$segments);
 			}
+			catch (ReflectionException $e)
+			{
+				die ($e->getMessage());
+			}			
+			return true;
 		}
 		return false;
 	}
