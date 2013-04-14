@@ -9,8 +9,9 @@ class Router
 	private static $controller_name;
 	private static $method_name;
 	private static $segments;
+	private static $path_info;
 	private static $routes;
-
+	
 	/**
 	 * Initialize routing
 	 * @param path_info: URL path
@@ -52,7 +53,7 @@ class Router
 		}
 		
 		self::$segments = $segments;
-		
+		self::$path_info = $path_info;	
 	}
 
 	/**
@@ -121,5 +122,10 @@ class Router
 	static function get_method()
 	{
 		return self::$method_name;
+	}
+
+	static function get_path()
+	{
+		return self::$path_info;
 	}
 }

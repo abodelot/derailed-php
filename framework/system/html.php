@@ -14,7 +14,11 @@ class Html
 		
 		return self::build_html_tag('a', 'href="'.$uri.'"', $options, $name);
 	}
-	
+
+	static function a_js($js, $name, $options = null)
+	{
+		return self::build_html_tag('a', 'href="javascript:'.$js.'"', $options, $name);
+	}
 	/**
 	 * Image tag <img />
 	 */

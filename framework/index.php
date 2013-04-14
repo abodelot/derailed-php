@@ -9,8 +9,8 @@ function raise_error($msg)
 }
 error_reporting(E_ALL | E_STRICT | E_NOTICE);
 
-define('APPPATH', 'application/');
-define('SYSPATH', 'system/');
+define('APPPATH', __DIR__.'/application/');
+define('SYSPATH', __DIR__.'/system/');
 
 // Load system classes
 require('system/config.php');

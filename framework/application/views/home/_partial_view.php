@@ -1,1 +1,0 @@
-<p>And I'm a partial view</p>
