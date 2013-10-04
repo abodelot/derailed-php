@@ -26,6 +26,16 @@ return array
 	 * Default controller
 	 * Controller to be invokated when none is provided in the URL
 	 */
-	'default_controller' => 'home'
+	'default_controller' => 'home',
+	
+	/**
+	 * Timezone
+	 */
+	'timezone' => 'Europe/Paris',
+	
+	/**
+	 * Locale
+	 */
+	'locale' => 'fr_FR.UTF-8'
 );
 

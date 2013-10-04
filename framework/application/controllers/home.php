@@ -4,17 +4,12 @@ class Home extends Controller
 {
 	function __construct()
 	{
-		parent::__construct('template');
+		parent::__construct('my_template');
 	}
 	
-	function index($name='World')
+	function index()
 	{
-		
-		$this->render(array('name' => $name, 'title' => 'Index'));
-	}
-	
-	function page2()
-	{
-		$this->render();	
+		$data['page_title'] = 'Home';
+		$this->render($data);
 	}
 }

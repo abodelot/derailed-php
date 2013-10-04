@@ -21,10 +21,16 @@ class Config
 				
 				// Set the base url automatically if none was provided
 				if (!self::get('base_url'))
-					self::set_base_url();
+					self::guess_base_url();
 				
 				// Set the site url
 				self::$site_url = self::get('base_url').self::get('index_page');
+				
+				// Configure the default timezone
+				date_default_timezone_set(self::get('timezone'));
+				
+				// Configure the system locale
+				setlocale(LC_ALL, self::get('locale'));
 				return true;
 			}
 		}
@@ -59,7 +65,10 @@ class Config
 		return self::$site_url;
 	}
 
-	private static function set_base_url()
+	/**
+	 * Resolve localhost's base url
+	 */
+	private static function guess_base_url()
 	{
 		if (isset($_SERVER['HTTP_HOST']))
 		{
@@ -69,7 +78,7 @@ class Config
 		}
 		else
 		{
-			$base_url = 'http://localhost';
+			$base_url = 'http://localhost/';
 		}
 		self::set('base_url', $base_url);
 	}
