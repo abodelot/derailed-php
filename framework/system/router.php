@@ -18,15 +18,29 @@ class Router
 	 */
 	static function initialize($path_info)
 	{
-		// Check if path_info is a route entry
-		if (is_array(self::$routes) && array_key_exists($path_info, self::$routes))
+		// Check for routes entry
+		if ($path_info && is_array(self::$routes))
 		{
-			$path_info = self::$routes[$path_info];
+			// path_info can be route + args
+			$p = $path_info;
+			$last_slash = strlen($p);
+			while ($p)
+			{
+				// Search for a matching route
+				if (array_key_exists($p, self::$routes))
+				{
+					// Reconstruct path_info with route and args (if any)
+					$path_info = self::$routes[$p].substr($path_info, $last_slash);
+					break;
+				}
+				// Trim to next slash
+				$last_slash = strrpos($p, '/');
+				$p = substr($p, 0, $last_slash);
+			}
 		}
 
 		// Split path_info into segments
 		self::$segments = $path_info ? explode('/', $path_info) : array();
-
 
 		// Extract nested sub directories if leading segments are matching
 		$dirpath = '';

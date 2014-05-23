@@ -26,10 +26,10 @@ if (isset($_SERVER['PATH_INFO']) && strlen($_SERVER['PATH_INFO']) > 1)
 {
 	// Ignore first '/' character
 	$path_info = substr($_SERVER['PATH_INFO'], 1);
-	
+
 	// Ignore trailing '/' characters (if any)
 	$path_info = rtrim($path_info, '/');
-	
+
 	// Remove dots for security reasons
 	$path_info = str_replace('..', '', $path_info);
 }

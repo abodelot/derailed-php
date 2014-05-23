@@ -15,6 +15,6 @@ class Home extends Controller
 	function welcome($username)
 	{
 		$data['username'] = $username;
-		echo 'Welcome '.$username.'!';
+		echo '<p>Welcome '.$username.'!</p>';
 	}
 }
