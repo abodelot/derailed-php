@@ -4,12 +4,17 @@ class Home extends Controller
 {
 	function __construct()
 	{
-		parent::__construct('my_template');
+		parent::__construct('layout');
 	}
-	
+
 	function index()
 	{
-		$data['page_title'] = 'Home';
-		$this->render($data);
+		$this->render();
+	}
+
+	function welcome($username)
+	{
+		$data['username'] = $username;
+		echo 'Welcome '.$username.'!';
 	}
 }

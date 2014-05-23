@@ -38,6 +38,6 @@ if (isset($_SERVER['PATH_INFO']) && strlen($_SERVER['PATH_INFO']) > 1)
 Router::initialize($path_info);
 if (!Router::invoke_controller())
 {
-	System::error('Cannot invoke '.Router::get_directory().Router::get_controller().'/'.Router::get_method());
+	System::error('Cannot invoke <code>'.Router::get_directory().Router::get_controller().'::'.Router::get_method().'</code>');
 }
 

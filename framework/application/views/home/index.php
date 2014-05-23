@@ -1,4 +1,3 @@
-<h2>Welcome</h2>
-<p>It's ok, you can stay.</p>
-
-
+<h2>Welcome to Derailed-PHP</h2>
+<p>This view has been displayed by calling the method <?= Router::get_controller() ?>::<?= Router::get_method() ?>()
+</p>
