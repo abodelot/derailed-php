@@ -24,36 +24,37 @@ class Router
 			$path_info = self::$routes[$path_info];
 		}
 
-		// Split path into segments
-		$segments = explode('/', $path_info);
-		if ($segments[0] !== '')
+		if ($path_info)
 		{
+			// Split path into segments
+			self::$segments = explode('/', $path_info);
+			
 			// If first segment is a controller
-			if (file_exists(APPPATH.'controllers/'.$segments[0].'.php'))
+			if (file_exists(APPPATH.'controllers/'.self::$segments[0].'.php'))
 			{
-				self::$controller_name = array_shift($segments);
+				self::$controller_name = array_shift(self::$segments);
 			}			
 			elseif (count($segments) > 1)
 			{
 				// If the controller is a sub folder
-				if (is_dir(APPPATH.'controllers/'.$segments[0]))
+				if (is_dir(APPPATH.'controllers/'.self::$segments[0]))
 				{
-					self::$directory = array_shift($segments);
-					if (file_exists(APPPATH.'controllers/'.self::$directory.'/'.$segments[0].'.php'))
+					self::$directory = array_shift(self::$segments);
+					if (file_exists(APPPATH.'controllers/'.self::$directory.'/'.self::$segments[0].'.php'))
 					{
-						self::$controller_name = array_shift($segment);				
+						self::$controller_name = array_shift(self::$segment);				
 					}
 				}
 			}
 		}
 		else
 		{
-			// Default controller and method
+			// No segments, use default controller with 'index' method
+			self::$segments = array();
 			self::$controller_name = Config::get('default_controller');
 		}
 		
-		self::$segments = $segments;
-		self::$path_info = $path_info;	
+		self::$path_info = $path_info;
 	}
 
 	/**
