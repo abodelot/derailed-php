@@ -19,6 +19,7 @@ class Html
 	{
 		return self::build_html_tag('a', 'href="javascript:'.$js.'"', $options, $name);
 	}
+	
 	/**
 	 * Image tag <img />
 	 */

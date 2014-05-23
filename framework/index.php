@@ -2,13 +2,6 @@
 
 // The journey begins here.
 
-
-function raise_error($msg)
-{
-	die('<p>FATAL ERROR: '.$msg.'</p>');
-}
-error_reporting(E_ALL | E_STRICT | E_NOTICE);
-
 define('APPPATH', __DIR__.'/application/');
 define('SYSPATH', __DIR__.'/system/');
 
@@ -16,15 +9,16 @@ define('SYSPATH', __DIR__.'/system/');
 require('system/config.php');
 require('system/controller.php');
 require('system/router.php');
+require('system/system.php');
 require('system/html.php');
 
 // Load application configuration file
 if (!Config::load(APPPATH.'config/config.php'))
-	raise_error('Cannot load application configuration');
+	System::error('Cannot load application configuration');
 
 // Load application routes
 if (!Router::load_routes(APPPATH.'config/routes.php'))
-	raise_error('Cannot load application routes');
+	System::error('Cannot load application routes');
 
 $path_info = '';
 // If URL contains a path
@@ -44,6 +38,6 @@ if (isset($_SERVER['PATH_INFO']) && strlen($_SERVER['PATH_INFO']) > 1)
 Router::initialize($path_info);
 if (!Router::invoke_controller())
 {
-	raise_error('cannot invoke '.Router::get_controller().'/'.Router::get_method());
+	System::error('Cannot invoke '.Router::get_directory().Router::get_controller().'/'.Router::get_method());
 }
 

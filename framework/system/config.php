@@ -14,10 +14,21 @@ class Config
 	{
 		if (is_readable($file_path))
 		{
-			$temp = require($file_path);
-			if (is_array($temp))
+			$items = require($file_path);
+			if (is_array($items))
 			{
-				self::$items = $temp;
+				self::$items = $items;
+				
+				// Application Debug Mode
+				if (self::get('debug'))
+				{
+					error_reporting(E_ALL | E_NOTICE);
+				}
+				else
+				{
+					error_reporting(0);
+				}
+				
 				
 				// Set the base url automatically if none was provided
 				if (!self::get('base_url'))

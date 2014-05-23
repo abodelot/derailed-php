@@ -36,7 +36,7 @@ abstract class Controller
 		$this->view_path = 'application/views/'.$view_path;
 		if (!is_readable($this->view_path))
 		{
-			die('view not reachable: '.$this->view_path); // TODO: handle error
+			System::error('View <code>'.$this->view_path.'</code> is not reachable');
 		}
 				
 		// Extract variables (if any)
@@ -59,7 +59,7 @@ abstract class Controller
 			$this->layout_path = $layout_path;
 		
 		else
-			die('layout not reachable:' .$layout_path); // TODO: handle error
+			System::error('Layout <code>'.$layout_path.'</code> is not reachable');
 	}
 	
 	function get_view_path()
