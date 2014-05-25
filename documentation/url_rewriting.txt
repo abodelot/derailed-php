@@ -1,0 +1,11 @@
+For hidding 'index.php' from the URL, make sure mod_rewrite is enabled
+on your Apache server. You can use the command:
+# a2enmod rewrite
+
+You can then use the provided .htaccess file at the site root directory
+to redirect requests to 'index.php', so 'http://site.com/request' will
+be interpreted as 'http://site.com/index.php/request'.
+Make sure .htaccess files are enabled in your Apache configuration.
+
+Finally, edit the configuration file 'application/config/config.php' and
+set the property 'index_page' to blank.

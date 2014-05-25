@@ -11,10 +11,4 @@ class Home extends Controller
 	{
 		$this->render();
 	}
-
-	function welcome($username)
-	{
-		$data['username'] = $username;
-		echo '<p>Welcome '.$username.'!</p>';
-	}
 }
