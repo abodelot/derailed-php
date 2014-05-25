@@ -39,8 +39,8 @@ class Router
 			}
 		}
 
-		// Split path_info into segments
-		self::$segments = $path_info ? explode('/', $path_info) : array();
+		// Split path_info into non-empty segments
+		self::$segments = array_filter(explode('/', $path_info));
 
 		// Extract nested sub directories if leading segments are matching
 		$dirpath = '';
@@ -157,5 +157,46 @@ class Router
 	static function get_path()
 	{
 		return self::$path_info;
+	}
+
+	/**
+	 * Parse REQUEST_URI and get the URI string
+	 */
+	static function get_request_uri()
+	{
+		if (!isset($_SERVER['REQUEST_URI'], $_SERVER['SCRIPT_NAME']))
+		{
+			return '';
+		}
+
+		$uri = parse_url($_SERVER['REQUEST_URI']);
+		$query = isset($uri['query']) ? $uri['query'] : '';
+		$uri = isset($uri['path']) ? rawurldecode($uri['path']) : '';
+
+		if (strpos($uri, $_SERVER['SCRIPT_NAME']) === 0)
+		{
+			$uri = substr($uri, strlen($_SERVER['SCRIPT_NAME']));
+		}
+		elseif (strpos($uri, dirname($_SERVER['SCRIPT_NAME'])) === 0)
+		{
+			$uri = substr($uri, strlen(dirname($_SERVER['SCRIPT_NAME'])));
+		}
+
+		// This section ensures that even on servers that require the URI to be in the query string (Nginx) a correct
+		// URI is found, and also fixes the QUERY_STRING server var and $_GET array.
+		if (trim($uri, '/') === '' && strncmp($query, '/', 1) === 0)
+		{
+			$query = explode('?', $query, 2);
+			$uri = rawurldecode($query[0]);
+			$_SERVER['QUERY_STRING'] = isset($query[1]) ? $query[1] : '';
+		}
+		else
+		{
+			$_SERVER['QUERY_STRING'] = $query;
+		}
+
+		parse_str($_SERVER['QUERY_STRING'], $_GET);
+
+		return $uri;
 	}
 }

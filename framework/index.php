@@ -20,18 +20,17 @@ if (!Config::load(APPPATH.'config/config.php'))
 if (!Router::load_routes(APPPATH.'config/routes.php'))
 	System::error('Cannot load application routes');
 
-$path_info = '';
-// If URL contains a path
-if (isset($_SERVER['PATH_INFO']) && strlen($_SERVER['PATH_INFO']) > 1)
-{
-	// Ignore first '/' character
-	$path_info = substr($_SERVER['PATH_INFO'], 1);
 
-	// Ignore trailing '/' characters (if any)
-	$path_info = rtrim($path_info, '/');
+$path_info = Router::get_request_uri();
+
+// If URL contains a path
+if ($path_info)
+{
+	// Ignore leading and trailing '/' character (if any)
+	$path_info = trim($path_info, '/');
 
 	// Remove dots for security reasons
-	$path_info = str_replace('..', '', $path_info);
+	$path_info = str_replace('..', '.', $path_info);
 }
 
 // Load the requested controller
