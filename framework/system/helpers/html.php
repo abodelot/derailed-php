@@ -11,25 +11,26 @@ class Html
 			$name = $uri;
 
 		$uri = self::build_link($uri);
-		
+
 		return self::build_html_tag('a', 'href="'.$uri.'"', $options, $name);
 	}
+
 
 	static function a_js($js, $name, $options = null)
 	{
 		return self::build_html_tag('a', 'href="javascript:'.$js.'"', $options, $name);
 	}
-	
+
 	/**
 	 * Image tag <img />
 	 */
 	static function img($uri, $options = null)
 	{
 		$uri = self::build_uri($uri);
-		
+
 		return self::build_html_tag('img', 'src="'.$uri.'"', $options);
 	}
-	
+
 	/**
 	 * CSS link tag <link />
 	 */
@@ -39,7 +40,7 @@ class Html
 		$attr = 'href="'.$uri.'" type="text/css" rel="stylesheet"';
 		return self::build_html_tag('link', $attr, $options);
 	}
-	
+
 	/**
 	 * Javascript tag <script>
 	 */
@@ -54,7 +55,7 @@ class Html
 		// If external link
 		if (preg_match('#^(\w+:)?//#i', $uri) === 1)
 			return $uri;
-		
+
 		$base_url = Config::get('base_url');
 		if ($uri[0] != '/' && $base_url[strlen($base_url) - 1] != '/')
 				$base_url .= '/';
@@ -62,20 +63,20 @@ class Html
 		return $base_url.$uri;
 	}
 
-	private static function build_link($uri)
+	public static function build_link($uri)
 	{
 		// If external link
 		if (preg_match('#^(\w+:)?//#i', $uri) === 1)
 			return $uri;
-		
+
 		// Prepend site url
-		$absolute_uri = Config::site_url();
-		if ($uri[0] != '/')
-			$absolute_uri .= '/';
-		
-		return $absolute_uri.$uri;
+		$site_url = Config::site_url();
+		if ($uri[0] != '/' && $site_url[strlen($site_url) - 1] != '/')
+			$site_url .= '/';
+
+		return $site_url.$uri;
 	}
-	
+
 	private static function build_html_tag($tag_name, $str_attr, $options, $content = null)
 	{
 		if (is_array($options))

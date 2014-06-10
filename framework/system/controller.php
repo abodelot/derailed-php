@@ -40,6 +40,7 @@ abstract class Controller
 		}
 
 		// Extract variables (if any)
+
 		if (is_array($data))
 			extract($data, EXTR_SKIP);
 
@@ -54,10 +55,15 @@ abstract class Controller
 
 	function set_layout($layout_path)
 	{
+		if (!$layout_path)
+		{
+			$this->layout_path = null;
+			return;
+		}
+
 		$layout_path = 'application/layouts/'.$layout_path.'.php';
 		if (is_readable($layout_path))
 			$this->layout_path = $layout_path;
-
 		else
 			System::error('Layout <code>'.$layout_path.'</code> is not reachable');
 	}

@@ -4,7 +4,7 @@ class Config
 {
 	private static $items = array();
 	private static $site_url = '';
-	
+
 	/**
 	 * Load config setting from a config file
 	 * @param file_path
@@ -18,30 +18,30 @@ class Config
 			if (is_array($items))
 			{
 				self::$items = $items;
-				
+
 				// Application Debug Mode
 				if (self::get('debug'))
 				{
 					ini_set('display_errors', 1);
-					error_reporting(E_ALL | E_NOTICE);
+					error_reporting(-1);
 				}
 				else
 				{
 					ini_set('display_errors', 0);
 					error_reporting(0);
 				}
-				
-				
+
+
 				// Set the base url automatically if none was provided
 				if (!self::get('base_url'))
 					self::guess_base_url();
-				
+
 				// Set the site url
 				self::$site_url = self::get('base_url').self::get('index_page');
-				
+
 				// Configure the default timezone
 				date_default_timezone_set(self::get('timezone'));
-				
+
 				// Configure the system locale
 				setlocale(LC_ALL, self::get('locale'));
 				return true;
@@ -49,7 +49,7 @@ class Config
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Return a config setting
 	 * @param name: name of the config setting
@@ -59,7 +59,7 @@ class Config
 	{
 		return array_key_exists($name, self::$items) ? self::$items[$name] : null;
 	}
-	
+
 	/**
 	 * Set a config setting
 	 * @param name:  name of the config setting
@@ -69,7 +69,7 @@ class Config
 	{
 		self::$items[$name] = $value;
 	}
-	
+
 	/**
 	 * Get site URL
 	 */

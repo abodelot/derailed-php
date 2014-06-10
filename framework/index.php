@@ -10,7 +10,12 @@ require('system/config.php');
 require('system/controller.php');
 require('system/router.php');
 require('system/system.php');
-require('system/html.php');
+
+// Load basic helpers
+require('system/helpers/html.php');
+require('system/helpers/form.php');
+require('system/helpers/input.php');
+require('system/helpers/validation.php');
 
 // Load application configuration file
 if (!Config::load(APPPATH.'config/config.php'))
